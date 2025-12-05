@@ -74,10 +74,10 @@ We believe fitness should be **fun, rewarding, and social**. FitFreak combines:
 - **Video Processing**: Real-time frame streaming
 
 ### **Blockchain**
-- **Network**: Citrea Testnet
-- **Smart Contracts**: Solidity
-- **Web3 Provider**: MetaMask integration
-- **Currency**: cBTC (Citrea Bitcoin)
+- **Network**: Solana (Devnet/Mainnet)
+- **Smart Contracts**: Anchor Framework (Rust)
+- **Web3 Provider**: Solana Wallet Adapter (Phantom, Solflare, etc.)
+- **Currency**: SOL (Native Solana)
 
 ---
 
@@ -118,7 +118,14 @@ We believe fitness should be **fun, rewarding, and social**. FitFreak combines:
    cp backend/.env.example backend/.env
    ```
 
-5. **Run the Application**
+5. **Deploy Solana Program** (See [DEPLOY_SOLANA.md](./DEPLOY_SOLANA.md) for detailed instructions)
+   ```bash
+   cd solana-program
+   npm install
+   ./deploy.sh devnet
+   ```
+
+6. **Run the Application**
    ```bash
    # Use the provided startup script
    chmod +x FitFreak.sh
