@@ -80,12 +80,12 @@ const LiveBettingPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="font-orbitron text-3xl font-bold text-cyber-green">
+        <h2 className="font-display text-3xl font-bold text-gradient">
           Live Betting Arena
         </h2>
-        <div className="text-sm text-gray-400">
+        <div className="text-sm text-slate-600">
           Total Pool:{" "}
-          <span className="text-cyber-green font-bold">6.5 ETH</span>
+          <span className="text-sky-blue font-bold">6.5 ETH</span>
         </div>
       </div>
 
@@ -93,34 +93,34 @@ const LiveBettingPage = () => {
         {/* Left Sidebar - Betting Status */}
         <div className="lg:col-span-1">
           <GlassCard className="sticky top-6">
-            <h3 className="font-orbitron text-xl font-bold text-white mb-4 flex items-center">
-              <DollarSign className="w-5 h-5 mr-2 text-cyber-green" />
+            <h3 className="font-display text-xl font-bold text-slate-800 mb-4 flex items-center">
+              <DollarSign className="w-5 h-5 mr-2 text-sky-blue" />
               Betting Status
             </h3>
 
-            <div className="text-center text-gray-400 py-6">
-              <Trophy className="w-12 h-12 mx-auto mb-3 text-cyber-green opacity-70" />
-              <p className="text-cyber-green font-bold mb-2">
+            <div className="text-center text-slate-600 py-6">
+              <Trophy className="w-12 h-12 mx-auto mb-3 text-sky-blue opacity-70" />
+              <p className="text-sky-blue font-bold mb-2">
                 Betting Complete!
               </p>
-              <p className="text-sm">You've placed bets on 3 players</p>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-sm text-slate-600">You've placed bets on 3 players</p>
+              <p className="text-xs text-slate-500 mt-2">
                 Contest in progress...
               </p>
 
               <div className="mt-4 text-center">
-                <div className="text-cyber-green font-bold text-lg">
+                <div className="text-sky-blue font-bold text-lg">
                   0.28 ETH
                 </div>
-                <div className="text-xs text-gray-400">Total Bet Amount</div>
+                <div className="text-xs text-slate-500">Total Bet Amount</div>
               </div>
             </div>
 
             {/* User's Current Bets */}
             {userBets.length > 0 && (
-              <div className="mt-6 pt-6 border-t border-gray-700">
-                <h4 className="font-orbitron text-lg font-bold text-white mb-3 flex items-center">
-                  <Trophy className="w-4 h-4 mr-2 text-cyber-green" />
+              <div className="mt-6 pt-6 border-t border-sky-light/30">
+                <h4 className="font-display text-lg font-bold text-slate-800 mb-3 flex items-center">
+                  <Trophy className="w-4 h-4 mr-2 text-sky-blue" />
                   Your Bets
                 </h4>
                 <div className="space-y-2">
@@ -129,12 +129,12 @@ const LiveBettingPage = () => {
                     return (
                       <div
                         key={bet.playerId}
-                        className="bg-cyber-green bg-opacity-10 border border-cyber-green border-opacity-30 rounded-lg p-2"
+                        className="bg-sky-bg border border-sky-light rounded-lg p-2"
                       >
-                        <div className="text-cyber-green font-bold text-sm">
+                        <div className="text-sky-blue font-bold text-sm">
                           {player?.name}
                         </div>
-                        <div className="text-xs text-gray-300">
+                        <div className="text-xs text-slate-600">
                           Bet: {bet.amount} • Odds: {player?.odds}
                         </div>
                       </div>
@@ -158,13 +158,13 @@ const LiveBettingPage = () => {
                   key={player.id}
                   className={`transition-all duration-300 rounded-xl ${
                     hasBet
-                      ? "border-2 border-cyber-green border-opacity-60 bg-cyber-green bg-opacity-5"
-                      : "border border-gray-700"
+                      ? "border-2 border-sky-blue border-opacity-60 bg-sky-bg"
+                      : "border border-sky-light/30"
                   }`}
                 >
                   <GlassCard>
                     {/* Video */}
-                    <div className="relative aspect-video bg-gray-900 rounded-lg overflow-hidden mb-3">
+                    <div className="relative aspect-video bg-slate-100 rounded-lg overflow-hidden mb-3">
                       <video
                         src={player.videoSrc}
                         className="w-full h-full object-cover"
@@ -190,7 +190,7 @@ const LiveBettingPage = () => {
                       {/* Bet Indicator */}
                       {hasBet && (
                         <div className="absolute top-2 right-2">
-                          <div className="bg-cyber-green text-black px-2 py-1 rounded text-xs font-bold">
+                          <div className="bg-gradient-to-r from-sky-blue to-sky-light text-white px-2 py-1 rounded text-xs font-bold shadow-lg">
                             BETTED
                           </div>
                         </div>
@@ -200,28 +200,28 @@ const LiveBettingPage = () => {
                     {/* Player Info */}
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
-                        <h3 className="font-orbitron font-bold text-white">
+                        <h3 className="font-display font-bold text-slate-800">
                           {player.name}
                         </h3>
-                        <div className="text-cyber-green font-bold">
+                        <div className="text-sky-blue font-bold">
                           {player.odds}
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div className="flex items-center text-gray-400">
+                        <div className="flex items-center text-slate-500">
                           <Users className="w-3 h-3 mr-1" />
                           {player.totalBets}
                         </div>
-                        <div className="flex items-center text-gray-400">
+                        <div className="flex items-center text-slate-500">
                           <TrendingUp className="w-3 h-3 mr-1" />
                           {player.performance}
                         </div>
                       </div>
 
                       {hasBet && (
-                        <div className="bg-cyber-green bg-opacity-20 border border-cyber-green border-opacity-50 rounded p-2 text-center">
-                          <div className="text-cyber-green font-bold text-sm">
+                        <div className="bg-sky-bg border border-sky-light rounded p-2 text-center">
+                          <div className="text-sky-blue font-bold text-sm">
                             Your Bet: {userBet.amount}
                           </div>
                         </div>

@@ -97,12 +97,12 @@ const ContestsPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="font-orbitron text-3xl font-bold text-cyber-green">
+        <h2 className="font-display text-3xl font-bold text-gradient">
           Live Contests
         </h2>
-        <div className="text-sm text-gray-400">
+        <div className="text-sm text-slate-600">
           Total Prize Pool:{" "}
-          <span className="text-cyber-green font-bold">38 ETH</span>
+          <span className="text-sky-blue font-bold">38 ETH</span>
         </div>
       </div>
 
@@ -111,10 +111,10 @@ const ContestsPage = () => {
           <GlassCard key={contest.id} glowEffect>
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h3 className="font-orbitron text-xl font-bold text-white mb-2">
+                <h3 className="font-display text-xl font-bold text-slate-800 mb-2">
                   {contest.name}
                 </h3>
-                <div className="flex items-center space-x-4 text-sm text-gray-400 mb-2">
+                <div className="flex items-center space-x-4 text-sm text-slate-500 mb-2">
                   <span
                     className={`px-2 py-1 rounded text-xs ${
                       contest.difficulty === "Easy"
@@ -135,21 +135,21 @@ const ContestsPage = () => {
                 </div>
                 <div className="flex items-center space-x-4 text-sm text-gray-400">
                   <span className="flex items-center">
-                    <Trophy className="w-4 h-4 mr-1 text-cyber-green" />
+                    <Trophy className="w-4 h-4 mr-1 text-sky-blue" />
                     {contest.prize}
                   </span>
                   <span className="flex items-center">
                     <Users className="w-4 h-4 mr-1" />
                     {contest.participants}
                   </span>
-                  <span className="flex items-center text-red-400">
+                  <span className="flex items-center text-orange-500">
                     <Clock className="w-4 h-4 mr-1" />
                     {contest.timeLeft}
                   </span>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-cyber-green font-bold text-lg mb-1">
+                <div className="text-sky-blue font-bold text-lg mb-1">
                   {contest.stake}
                 </div>
               </div>
@@ -180,21 +180,21 @@ const ContestsPage = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
         >
           <GlassCard className="max-w-xl w-full max-h-[70vh] overflow-y-auto">
             <div className="text-center mb-6">
-              <h3 className="font-orbitron text-2xl font-bold text-cyber-green mb-2">
+              <h3 className="font-display text-2xl font-bold text-gradient mb-2">
                 {selectedContest?.name ?? "Contest Details"}
               </h3>
-              <p className="text-gray-300 mb-4">
+              <p className="text-slate-600 mb-4">
                 {selectedContest?.description ?? "Get ready to compete!"}
               </p>
             </div>
 
             <div className="relative mb-6">
-              <div className="aspect-video bg-gray-900 rounded-lg border-2 border-cyber-green relative overflow-hidden">
-                <div className="absolute inset-4 border-2 border-dashed border-cyber-green opacity-50 rounded-lg" />
+              <div className="aspect-video bg-slate-100 rounded-lg border-2 border-sky-blue relative overflow-hidden">
+                <div className="absolute inset-4 border-2 border-dashed border-sky-blue/50 rounded-lg" />
                 <div className="flex items-center justify-center h-full">
                   <img
                     src={outputSquatGif}
@@ -203,25 +203,25 @@ const ContestsPage = () => {
                   />
                 </div>
 
-                <div className="absolute top-2 left-2 w-8 h-8 border-l-2 border-t-2 border-cyber-green opacity-80" />
-                <div className="absolute top-2 right-2 w-8 h-8 border-r-2 border-t-2 border-cyber-green opacity-80" />
-                <div className="absolute bottom-2 left-2 w-8 h-8 border-l-2 border-b-2 border-cyber-green opacity-80" />
-                <div className="absolute bottom-2 right-2 w-8 h-8 border-r-2 border-b-2 border-cyber-green opacity-80" />
+                <div className="absolute top-2 left-2 w-8 h-8 border-l-2 border-t-2 border-sky-blue opacity-60" />
+                <div className="absolute top-2 right-2 w-8 h-8 border-r-2 border-t-2 border-sky-blue opacity-60" />
+                <div className="absolute bottom-2 left-2 w-8 h-8 border-l-2 border-b-2 border-sky-blue opacity-60" />
+                <div className="absolute bottom-2 right-2 w-8 h-8 border-r-2 border-b-2 border-sky-blue opacity-60" />
               </div>
             </div>
 
             {selectedContest && (
               <div className="mb-6">
-                <h4 className="font-orbitron text-lg font-bold text-white mb-3">
+                <h4 className="font-display text-lg font-bold text-slate-800 mb-3">
                   Contest Rules
                 </h4>
                 <div className="space-y-2">
                   {selectedContest.rules.map((rule: string, index: number) => (
                     <div
                       key={index}
-                      className="flex items-center text-sm text-gray-300"
+                      className="flex items-center text-sm text-slate-600"
                     >
-                      <Target className="w-4 h-4 mr-2 text-cyber-green flex-shrink-0" />
+                      <Target className="w-4 h-4 mr-2 text-sky-blue flex-shrink-0" />
                       {rule}
                     </div>
                   ))}
