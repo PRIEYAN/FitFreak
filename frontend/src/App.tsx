@@ -4,15 +4,13 @@ import LandingPage from "./pages/LandingPage";
 import AuthPage from "./pages/AuthPage";
 import DashboardPage from "./pages/DashboardPage";
 import ContestResultPage from "./pages/ContestResultPage";
-import ParticleBackground from "./components/ParticleBackground";
 import Web3AuthQR from "./pages/Page";
 import BettingPage from "./pages/LiveBetting";
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-cyber-black text-white relative overflow-hidden">
-        <ParticleBackground />
+      <div className="min-h-screen bg-gradient-to-br from-sky-bg via-sky-lightest to-sky-bg-light text-slate-800 relative overflow-hidden">
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<LandingPage />} />

@@ -1,3 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-sky-bg via-sky-lightest to-sky-bg-light text-slate-800 antialiased;
+  }
+  
+  * {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-xl border border-sky-light/30 rounded-2xl shadow-lg shadow-sky-blue/10;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-sky-blue to-sky-light text-white font-semibold px-6 py-3 rounded-xl shadow-lg shadow-sky-blue/30 hover:shadow-sky-blue/50 hover:scale-105 transition-all duration-300;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-sky-blue via-sky-light to-ocean bg-clip-text text-transparent;
+  }
+}

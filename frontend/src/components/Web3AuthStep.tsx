@@ -17,31 +17,31 @@ const Web3AuthStep = ({ isConnecting, onAuth }: Web3AuthStepProps) => {
         transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
         className="mb-6"
       >
-        <div className="w-20 h-20 bg-cyber-green bg-opacity-20 rounded-full border-2 border-cyber-green mx-auto mb-4 flex items-center justify-center">
-          <Shield className="w-10 h-10 text-cyber-green" />
+        <div className="w-20 h-20 bg-gradient-to-br from-sky-blue/20 to-sky-light/20 rounded-full border-2 border-sky-blue mx-auto mb-4 flex items-center justify-center">
+          <Shield className="w-10 h-10 text-sky-blue" />
         </div>
       </motion.div>
 
-      <h2 className="font-orbitron text-2xl font-bold mb-2 text-cyber-green">
+      <h2 className="font-display text-2xl font-bold mb-2 text-gradient">
         Web3 Authentication
       </h2>
-      <p className="text-gray-300 text-sm mb-6">
+      <p className="text-slate-600 text-sm mb-6">
         Secure decentralized authentication protocol initialization
       </p>
 
       {/* Authentication Features */}
       <div className="space-y-3 mb-6 text-left">
         <div className="flex items-center space-x-3 text-sm">
-          <Lock className="w-4 h-4 text-cyber-green" />
-          <span className="text-gray-300">End-to-end </span>
+          <Lock className="w-4 h-4 text-sky-blue" />
+          <span className="text-slate-600">End-to-end encryption</span>
         </div>
         <div className="flex items-center space-x-3 text-sm">
-          <Globe className="w-4 h-4 text-cyber-green" />
-          <span className="text-gray-300">Decentralized identity</span>
+          <Globe className="w-4 h-4 text-sky-blue" />
+          <span className="text-slate-600">Decentralized identity</span>
         </div>
         <div className="flex items-center space-x-3 text-sm">
-          <Shield className="w-4 h-4 text-cyber-green" />
-          <span className="text-gray-300">Zero-knowledge proofs</span>
+          <Shield className="w-4 h-4 text-sky-blue" />
+          <span className="text-slate-600">Zero-knowledge proofs</span>
         </div>
       </div>
 

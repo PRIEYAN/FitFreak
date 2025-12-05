@@ -22,34 +22,34 @@ const WalletConnectStep = ({
         transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
         className="mb-6"
       >
-        <div className="w-20 h-20 bg-cyber-green bg-opacity-20 rounded-full border-2 border-cyber-green mx-auto mb-4 flex items-center justify-center">
-          <Wallet className="w-10 h-10 text-cyber-green" />
+        <div className="w-20 h-20 bg-gradient-to-br from-sky-blue/20 to-sky-light/20 rounded-full border-2 border-sky-blue mx-auto mb-4 flex items-center justify-center">
+          <Wallet className="w-10 h-10 text-sky-blue" />
         </div>
       </motion.div>
 
-      <h2 className="font-orbitron text-2xl font-bold mb-2 text-cyber-green">
+      <h2 className="font-display text-2xl font-bold mb-2 text-gradient">
         Wallet Connection
       </h2>
-      <p className="text-gray-300 text-sm mb-6">
-        Connect your MetaMask wallet to access the Fitter Coin ecosystem
+      <p className="text-slate-600 text-sm mb-6">
+        Connect your MetaMask wallet to access the FitFreak ecosystem
       </p>
 
       {/* Wallet Info */}
-      <div className="bg-gray-900 border border-cyber-green border-opacity-30 rounded-lg p-4 mb-6">
+      <div className="bg-sky-bg border border-sky-light rounded-lg p-4 mb-6">
         <div className="flex items-center justify-center space-x-2 mb-2">
           <img
             src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNGNjY1MkEiLz4KPHBhdGggZD0iTTI0IDEzTDE2IDIxTDggMTNIMjRaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4="
             alt="MetaMask"
             className="w-6 h-6"
           />
-          <span className="text-white font-semibold">MetaMask</span>
+          <span className="text-slate-800 font-semibold">MetaMask</span>
         </div>
-        <p className="text-xs text-gray-400">Industry standard Web3 wallet</p>
+        <p className="text-xs text-slate-500">Industry standard Web3 wallet</p>
       </div>
 
-      <div className="flex items-start space-x-2 mb-6 text-left bg-yellow-900 bg-opacity-20 border border-yellow-600 rounded-lg p-3">
-        <AlertCircle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-        <div className="text-xs text-yellow-200">
+      <div className="flex items-start space-x-2 mb-6 text-left bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+        <AlertCircle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+        <div className="text-xs text-yellow-800">
           Make sure MetaMask is installed and unlocked before connecting.
         </div>
       </div>
@@ -74,7 +74,7 @@ const WalletConnectStep = ({
       </NeonButton>
 
       <motion.button
-        className="text-gray-400 hover:text-cyber-green transition-colors text-sm"
+        className="text-slate-500 hover:text-sky-blue transition-colors text-sm"
         onClick={onBack}
         whileHover={{ scale: 1.05 }}
         disabled={isConnecting}
