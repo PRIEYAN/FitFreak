@@ -25,8 +25,8 @@ import {
 const GlassCard = ({ children, className = "", glowEffect = false }) => (
   <div
     className={`
-    glass-card p-6
-    ${glowEffect ? "ring-2 ring-sky-light/30" : ""}
+    bg-gray-900/80 backdrop-blur-sm border border-gray-700 rounded-xl p-6
+    ${glowEffect ? "shadow-lg shadow-green-500/20" : ""}
     ${className}
   `}
   >
@@ -39,7 +39,8 @@ const NeonButton = ({ children, className = "", size = "md", onClick }) => (
   <button
     onClick={onClick}
     className={`
-      btn-primary
+      bg-green-500 hover:bg-green-400 text-black font-bold rounded-lg
+      transition-all duration-200 hover:shadow-lg hover:shadow-green-500/30
       ${size === "sm" ? "px-3 py-1 text-sm" : "px-4 py-2"}
       ${className}
     `}
@@ -161,15 +162,15 @@ const BettingPage = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case "upcoming":
-        return "text-sky-blue bg-sky-bg";
+        return "text-blue-400 bg-blue-900/20";
       case "betting-closed":
-        return "text-orange-500 bg-orange-50";
+        return "text-yellow-400 bg-yellow-900/20";
       case "live":
-        return "text-red-500 bg-red-50";
+        return "text-red-400 bg-red-900/20";
       case "completed":
-        return "text-emerald-600 bg-emerald-50";
+        return "text-green-400 bg-green-900/20";
       default:
-        return "text-slate-500 bg-sky-bg";
+        return "text-gray-400 bg-gray-900/20";
     }
   };
 
@@ -196,21 +197,21 @@ const BettingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-bg via-sky-lightest to-sky-bg-light text-slate-800 p-6 space-y-8">
+    <div className="min-h-screen bg-cyber-black text-white p-6 space-y-8">
       {/* Header */}
-      <div className="flex justify-between items-start">
+      <div className="flex bg-cyber-black justify-between items-start">
         <div>
-          <h1 className="text-4xl font-bold text-gradient mb-2">
+          <h1 className="text-4xl font-bold text-green-500 mb-2">
             Contest Betting Arena
           </h1>
-          <p className="text-slate-600">
+          <p className="text-gray-400">
             Live sports betting on fitness challenges
           </p>
         </div>
 
         <div className="text-right">
-          <div className="text-sm text-slate-500 mb-1">Your Balance</div>
-          <div className="text-2xl font-bold text-sky-blue flex items-center">
+          <div className="text-sm text-gray-400 mb-1">Your Balance</div>
+          <div className="text-2xl font-bold text-green-500 flex items-center">
             <Wallet className="w-5 h-5 mr-2" />
             1.25 SOL
           </div>
@@ -231,26 +232,26 @@ const BettingPage = () => {
               >
                 <GlassCard
                   className={
-                    contest.featured ? "border-2 border-sky-blue" : ""
+                    contest.featured ? "border-2 border-green-500" : ""
                   }
                   glowEffect={contest.featured}
                 >
                   {contest.featured && (
-                    <div className="absolute -top-3 left-4 bg-gradient-to-r from-sky-blue to-sky-light text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                    <div className="absolute -top-3 left-4 bg-green-500 text-black px-3 py-1 rounded-full text-xs font-bold">
                       FEATURED
                     </div>
                   )}
 
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-start space-x-3">
-                      <div className="w-12 h-12 bg-gradient-to-br from-sky-blue/20 to-sky-light/20 rounded-lg flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-sky-blue" />
+                      <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                        <Icon className="w-6 h-6 text-green-500" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-gradient">
+                        <h3 className="text-xl font-bold text-green-500">
                           {contest.title}
                         </h3>
-                        <div className="flex items-center space-x-4 text-sm text-slate-500 mt-1">
+                        <div className="flex items-center space-x-4 text-sm text-gray-400 mt-1">
                           <span className="flex items-center">
                             <Calendar className="w-4 h-4 mr-1" />
                             {new Date(contest.startTime).toLocaleString()}
@@ -274,25 +275,25 @@ const BettingPage = () => {
 
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div className="text-center">
-                      <DollarSign className="w-5 h-5 text-sky-blue mx-auto mb-1" />
-                      <div className="text-lg font-bold text-slate-800">
+                      <DollarSign className="w-5 h-5 text-green-500 mx-auto mb-1" />
+                      <div className="text-lg font-bold text-white">
                         {contest.totalPool}
                       </div>
-                      <div className="text-xs text-slate-500">Prize Pool</div>
+                      <div className="text-xs text-gray-400">Prize Pool</div>
                     </div>
                     <div className="text-center">
-                      <Users className="w-5 h-5 text-sky-blue mx-auto mb-1" />
-                      <div className="text-lg font-bold text-slate-800">
+                      <Users className="w-5 h-5 text-green-500 mx-auto mb-1" />
+                      <div className="text-lg font-bold text-white">
                         {contest.participants}
                       </div>
-                      <div className="text-xs text-slate-500">Athletes</div>
+                      <div className="text-xs text-gray-400">Athletes</div>
                     </div>
                     <div className="text-center">
-                      <Activity className="w-5 h-5 text-sky-blue mx-auto mb-1" />
-                      <div className="text-lg font-bold text-slate-800">
+                      <Activity className="w-5 h-5 text-green-500 mx-auto mb-1" />
+                      <div className="text-lg font-bold text-white">
                         {contest.minBet}
                       </div>
-                      <div className="text-xs text-slate-500">Min Bet</div>
+                      <div className="text-xs text-gray-400">Min Bet</div>
                     </div>
                   </div>
 
@@ -313,14 +314,14 @@ const BettingPage = () => {
             <div>
               <button
                 onClick={() => setSelectedContest(null)}
-                className="text-sky-blue hover:text-sky-light mb-4 font-semibold"
+                className="text-green-500 hover:text-green-400 mb-4"
               >
                 ← Back to Contests
               </button>
-              <h2 className="text-3xl font-bold text-gradient mb-2">
+              <h2 className="text-3xl font-bold text-white mb-2">
                 {selectedContest.title}
               </h2>
-              <div className="flex items-center space-x-4 text-slate-500">
+              <div className="flex items-center space-x-4 text-gray-400">
                 <span>
                   Starts: {new Date(selectedContest.startTime).toLocaleString()}
                 </span>
@@ -338,13 +339,13 @@ const BettingPage = () => {
           </div>
 
           {/* Tabs */}
-          <div className="flex space-x-4 border-b border-sky-light/30">
+          <div className="flex space-x-4 border-b border-gray-700">
             <button
               onClick={() => setActiveTab("overview")}
               className={`pb-4 px-2 font-medium transition-colors ${
                 activeTab === "overview"
-                  ? "text-sky-blue border-b-2 border-sky-blue"
-                  : "text-slate-500 hover:text-sky-blue"
+                  ? "text-green-500 border-b-2 border-green-500"
+                  : "text-gray-400 hover:text-white"
               }`}
             >
               Overview
@@ -353,8 +354,8 @@ const BettingPage = () => {
               onClick={() => setActiveTab("participants")}
               className={`pb-4 px-2 font-medium transition-colors ${
                 activeTab === "participants"
-                  ? "text-sky-blue border-b-2 border-sky-blue"
-                  : "text-slate-500 hover:text-sky-blue"
+                  ? "text-green-500 border-b-2 border-green-500"
+                  : "text-gray-400 hover:text-white"
               }`}
             >
               Participants ({selectedContest.participants})
@@ -365,20 +366,20 @@ const BettingPage = () => {
           {activeTab === "overview" ? (
             <div className="grid lg:grid-cols-2 gap-6">
               <GlassCard>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">
+                <h3 className="text-xl font-bold text-white mb-4">
                   Contest Description
                 </h3>
-                <p className="text-slate-600 mb-6">
+                <p className="text-gray-300 mb-6">
                   {selectedContest.description}
                 </p>
 
-                <h4 className="font-semibold text-slate-800 mb-3">
+                <h4 className="font-semibold text-white mb-3">
                   Rules & Format
                 </h4>
-                <ul className="space-y-2 text-slate-600">
+                <ul className="space-y-2 text-gray-300">
                   {selectedContest.rules.map((rule, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="text-sky-blue mr-2">•</span>
+                      <span className="text-green-500 mr-2">•</span>
                       {rule}
                     </li>
                   ))}
@@ -386,25 +387,25 @@ const BettingPage = () => {
               </GlassCard>
 
               <GlassCard>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">
+                <h3 className="text-xl font-bold text-white mb-4">
                   Prize Distribution
                 </h3>
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-sky-bg rounded border border-sky-light/30">
-                    <span className="text-slate-800 font-medium">1st Place</span>
-                    <span className="text-sky-blue font-bold">
+                  <div className="flex justify-between items-center p-3 bg-gray-800/50 rounded border border-green-500/20">
+                    <span className="text-white font-medium">1st Place</span>
+                    <span className="text-green-500 font-bold">
                       50% of pool
                     </span>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-sky-bg rounded border border-sky-light/30">
-                    <span className="text-slate-800 font-medium">2nd Place</span>
-                    <span className="text-sky-blue font-bold">
+                  <div className="flex justify-between items-center p-3 bg-gray-800/50 rounded border border-green-500/20">
+                    <span className="text-white font-medium">2nd Place</span>
+                    <span className="text-green-500 font-bold">
                       30% of pool
                     </span>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-sky-bg rounded border border-sky-light/30">
-                    <span className="text-slate-800 font-medium">3rd Place</span>
-                    <span className="text-sky-blue font-bold">
+                  <div className="flex justify-between items-center p-3 bg-gray-800/50 rounded border border-green-500/20">
+                    <span className="text-white font-medium">3rd Place</span>
+                    <span className="text-green-500 font-bold">
                       20% of pool
                     </span>
                   </div>
@@ -419,33 +420,33 @@ const BettingPage = () => {
                   className="hover:scale-105 transition-all"
                 >
                   <div className="text-center mb-4">
-                    <div className="w-16 h-16 bg-gradient-to-br from-sky-blue/20 to-sky-light/20 rounded-full mx-auto mb-3 flex items-center justify-center">
-                      <User className="w-8 h-8 text-sky-blue" />
+                    <div className="w-16 h-16 bg-green-500/20 rounded-full mx-auto mb-3 flex items-center justify-center">
+                      <User className="w-8 h-8 text-green-500" />
                     </div>
-                    <h4 className="font-bold text-slate-800">{participant.name}</h4>
-                    <div className="text-sm text-sky-blue">
+                    <h4 className="font-bold text-white">{participant.name}</h4>
+                    <div className="text-sm text-green-500">
                       Level {participant.level} • {participant.rank}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2 text-xs mb-4">
                     <div className="text-center">
-                      <div className="text-slate-800 font-bold">
+                      <div className="text-white font-bold">
                         {participant.winRate}%
                       </div>
-                      <div className="text-slate-500">Win Rate</div>
+                      <div className="text-gray-400">Win Rate</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-slate-800 font-bold">
+                      <div className="text-white font-bold">
                         {participant.totalEarned}
                       </div>
-                      <div className="text-slate-500">Earned</div>
+                      <div className="text-gray-400">Earned</div>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-slate-600">Odds:</span>
-                    <span className="text-sky-blue font-bold text-lg">
+                    <span className="text-gray-300">Odds:</span>
+                    <span className="text-green-500 font-bold text-lg">
                       {participant.odds}
                     </span>
                   </div>
@@ -453,7 +454,7 @@ const BettingPage = () => {
                   <div className="space-y-2">
                     <button
                       onClick={() => setSelectedParticipant(participant)}
-                      className="w-full bg-sky-bg hover:bg-sky-light/20 text-slate-800 py-2 rounded text-sm transition-colors border border-sky-light"
+                      className="w-full bg-gray-800 hover:bg-gray-700 text-white py-2 rounded text-sm transition-colors"
                     >
                       View Profile
                     </button>
@@ -464,7 +465,7 @@ const BettingPage = () => {
                           type="number"
                           step="0.01"
                           placeholder="0.1"
-                          className="flex-1 bg-white border border-sky-light rounded px-2 py-1 text-slate-800 text-xs"
+                          className="flex-1 bg-gray-800 border border-green-500/50 rounded px-2 py-1 text-white text-xs"
                           onChange={(e) => setBetAmount(e.target.value)}
                         />
                         <NeonButton
@@ -485,8 +486,8 @@ const BettingPage = () => {
 
                     {selectedBets[selectedContest.id]?.participant ===
                       participant.name && (
-                      <div className="bg-sky-bg border border-sky-light rounded px-2 py-1 text-center">
-                        <div className="text-sky-blue text-xs font-bold">
+                      <div className="bg-green-900/20 border border-green-500/30 rounded px-2 py-1 text-center">
+                        <div className="text-green-400 text-xs font-bold">
                           ✓ Bet Placed:{" "}
                           {selectedBets[selectedContest.id].amount} SOL
                         </div>
@@ -502,16 +503,16 @@ const BettingPage = () => {
 
       {/* Participant Modal */}
       {selectedParticipant && (
-        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
           <GlassCard className="max-w-4xl w-full max-h-[80vh] overflow-y-auto">
             <div className="flex justify-between items-start mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-gradient">
+                <h2 className="text-2xl font-bold text-green-500">
                   {selectedParticipant.name}
                 </h2>
-                <div className="flex items-center space-x-4 text-sm text-slate-500">
+                <div className="flex items-center space-x-4 text-sm text-gray-400">
                   <span>Level {selectedParticipant.level}</span>
-                  <span className="text-sky-blue">
+                  <span className="text-green-500">
                     {selectedParticipant.rank}
                   </span>
                   <span>{selectedParticipant.winRate}% Win Rate</span>
@@ -519,7 +520,7 @@ const BettingPage = () => {
               </div>
               <button
                 onClick={() => setSelectedParticipant(null)}
-                className="text-slate-500 hover:text-slate-800"
+                className="text-gray-400 hover:text-white"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -528,39 +529,39 @@ const BettingPage = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-sky-bg p-3 rounded border border-sky-light/30">
-                    <Trophy className="w-5 h-5 text-sky-blue mb-1" />
-                    <div className="text-lg font-bold text-slate-800">
+                  <div className="bg-gray-800 p-3 rounded border border-green-500/20">
+                    <Trophy className="w-5 h-5 text-green-500 mb-1" />
+                    <div className="text-lg font-bold text-white">
                       {selectedParticipant.completedChallenges}
                     </div>
-                    <div className="text-xs text-slate-500">Completed</div>
+                    <div className="text-xs text-gray-400">Completed</div>
                   </div>
-                  <div className="bg-sky-bg p-3 rounded border border-sky-light/30">
-                    <DollarSign className="w-5 h-5 text-sky-blue mb-1" />
-                    <div className="text-lg font-bold text-slate-800">
+                  <div className="bg-gray-800 p-3 rounded border border-green-500/20">
+                    <DollarSign className="w-5 h-5 text-green-500 mb-1" />
+                    <div className="text-lg font-bold text-white">
                       {selectedParticipant.totalEarned}
                     </div>
-                    <div className="text-xs text-slate-500">Earned</div>
+                    <div className="text-xs text-gray-400">Earned</div>
                   </div>
-                  <div className="bg-sky-bg p-3 rounded border border-sky-light/30">
-                    <Flame className="w-5 h-5 text-sky-blue mb-1" />
-                    <div className="text-lg font-bold text-slate-800">
+                  <div className="bg-gray-800 p-3 rounded border border-green-500/20">
+                    <Flame className="w-5 h-5 text-green-500 mb-1" />
+                    <div className="text-lg font-bold text-white">
                       {selectedParticipant.streak}
                     </div>
-                    <div className="text-xs text-slate-500">Day Streak</div>
+                    <div className="text-xs text-gray-400">Day Streak</div>
                   </div>
-                  <div className="bg-sky-bg p-3 rounded border border-sky-light/30">
-                    <BarChart3 className="w-5 h-5 text-sky-blue mb-1" />
-                    <div className="text-lg font-bold text-slate-800">
+                  <div className="bg-gray-800 p-3 rounded border border-green-500/20">
+                    <BarChart3 className="w-5 h-5 text-green-500 mb-1" />
+                    <div className="text-lg font-bold text-white">
                       {selectedParticipant.winRate}%
                     </div>
-                    <div className="text-xs text-slate-500">Win Rate</div>
+                    <div className="text-xs text-gray-400">Win Rate</div>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 className="font-semibold text-slate-800 mb-3">
+                <h4 className="font-semibold text-white mb-3">
                   Recent Performance
                 </h4>
                 <div className="h-32 flex items-end space-x-1">
@@ -570,10 +571,10 @@ const BettingPage = () => {
                       className="flex-1 flex flex-col items-center"
                     >
                       <div
-                        className="w-full bg-gradient-to-t from-sky-blue to-sky-light rounded-t"
+                        className="w-full bg-green-500 rounded-t"
                         style={{ height: `${score}%` }}
                       />
-                      <div className="text-xs text-slate-500 mt-1">
+                      <div className="text-xs text-gray-400 mt-1">
                         {index + 1}
                       </div>
                     </div>
@@ -582,13 +583,13 @@ const BettingPage = () => {
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-sky-light/30">
+            <div className="mt-6 pt-4 border-t border-gray-700">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-slate-800 font-semibold">
+                  <div className="text-white font-semibold">
                     Place Bet on {selectedParticipant.name}
                   </div>
-                  <div className="text-sm text-slate-500">
+                  <div className="text-sm text-gray-400">
                     Odds: {selectedParticipant.odds}
                   </div>
                 </div>
@@ -597,7 +598,7 @@ const BettingPage = () => {
                     type="number"
                     step="0.01"
                     placeholder="0.1"
-                    className="w-20 bg-white border border-sky-light rounded px-2 py-1 text-slate-800 text-sm"
+                    className="w-20 bg-gray-800 border border-green-500/50 rounded px-2 py-1 text-white text-sm"
                     value={betAmount}
                     onChange={(e) => setBetAmount(e.target.value)}
                   />
@@ -623,11 +624,11 @@ const BettingPage = () => {
 
       {/* Simple Live Stream Modal */}
       {isLiveStreamOpen && selectedContest && (
-        <div className="fixed inset-0 bg-slate-900/95 backdrop-blur-md flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-50">
           <div className="w-full h-full max-w-6xl mx-auto p-4 flex flex-col">
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2 text-red-500">
+                <div className="flex items-center space-x-2 text-red-400">
                   <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
                   <span className="font-bold">LIVE</span>
                 </div>
@@ -639,17 +640,17 @@ const BettingPage = () => {
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setIsMuted(!isMuted)}
-                  className="p-2 bg-white/10 backdrop-blur-sm rounded hover:bg-white/20"
+                  className="p-2 bg-gray-800 rounded hover:bg-gray-700"
                 >
                   {isMuted ? (
-                    <VolumeX className="w-5 h-5 text-slate-300" />
+                    <VolumeX className="w-5 h-5 text-gray-400" />
                   ) : (
                     <Volume2 className="w-5 h-5 text-white" />
                   )}
                 </button>
                 <button
                   onClick={() => setIsLiveStreamOpen(false)}
-                  className="p-2 bg-white/10 backdrop-blur-sm rounded hover:bg-white/20"
+                  className="p-2 bg-gray-800 rounded hover:bg-gray-700"
                 >
                   <X className="w-5 h-5 text-white" />
                 </button>
@@ -658,14 +659,14 @@ const BettingPage = () => {
 
             <div className="flex-1 grid grid-cols-4 gap-4">
               <div className="col-span-3">
-                <div className="aspect-video bg-slate-800 rounded-lg relative overflow-hidden border-2 border-sky-blue/30">
+                <div className="aspect-video bg-gray-800 rounded-lg relative overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <Video className="w-20 h-20 text-slate-400" />
+                    <Video className="w-20 h-20 text-gray-600" />
                   </div>
                   <div className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 rounded text-sm font-bold">
                     LIVE
                   </div>
-                  <div className="absolute bottom-4 left-4 bg-slate-900/80 backdrop-blur-sm text-white px-3 py-1 rounded">
+                  <div className="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white px-3 py-1 rounded">
                     Current Leader: IronTitan_X
                   </div>
                 </div>
@@ -673,8 +674,8 @@ const BettingPage = () => {
 
               <div className="space-y-4">
                 <GlassCard className="p-4">
-                  <h3 className="font-bold text-slate-800 mb-3 flex items-center">
-                    <Trophy className="w-4 h-4 mr-2 text-sky-blue" />
+                  <h3 className="font-bold text-white mb-3 flex items-center">
+                    <Trophy className="w-4 h-4 mr-2 text-green-500" />
                     Live Leaderboard
                   </h3>
                   <div className="space-y-2">
@@ -689,17 +690,17 @@ const BettingPage = () => {
                             <span
                               className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
                                 index === 0
-                                  ? "bg-gradient-to-r from-sky-blue to-sky-light text-white"
-                                  : "bg-slate-200 text-slate-700"
+                                  ? "bg-green-500 text-black"
+                                  : "bg-gray-600 text-white"
                               }`}
                             >
                               {index + 1}
                             </span>
-                            <span className="text-slate-800">
+                            <span className="text-white">
                               {participant.name}
                             </span>
                           </div>
-                          <span className="text-sky-blue font-bold">
+                          <span className="text-green-500 font-bold">
                             {100 - index * 5} pts
                           </span>
                         </div>
@@ -708,15 +709,15 @@ const BettingPage = () => {
                 </GlassCard>
 
                 <GlassCard className="p-4 flex-1">
-                  <h3 className="font-bold text-slate-800 mb-3 flex items-center">
-                    <MessageSquare className="w-4 h-4 mr-2 text-sky-blue" />
+                  <h3 className="font-bold text-white mb-3 flex items-center">
+                    <MessageSquare className="w-4 h-4 mr-2 text-green-500" />
                     Live Chat
                   </h3>
                   <div className="space-y-2 text-sm">
-                    <div className="text-sky-blue">
+                    <div className="text-blue-400">
                       <strong>Viewer123:</strong> Amazing!
                     </div>
-                    <div className="text-sky-light">
+                    <div className="text-green-400">
                       <strong>FitFan:</strong> Great performance!
                     </div>
                   </div>

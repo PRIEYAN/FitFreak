@@ -153,14 +153,14 @@ const ChallengePage = () => {
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     Connecting...
-            </div>
-          ) : (
+                  </div>
+                ) : (
                   <div className="flex items-center gap-2">
                     <Wallet className="w-5 h-5" />
-              {isWalletInstalled ? "Connect Solana Wallet" : "Install Solana Wallet"}
+                    {isWalletInstalled ? "Connect Solana Wallet" : "Install Solana Wallet"}
                   </div>
                 )}
-            </NeonButton>
+              </NeonButton>
             ) : (
               <div className="flex items-center gap-4 glass-card rounded-lg px-6 py-3">
                 <div className="flex items-center gap-2 text-sky-blue">
@@ -174,9 +174,9 @@ const ChallengePage = () => {
                   {balance.toFixed(4)} SOL
                 </div>
               </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
 
         {/* Contests Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -227,11 +227,11 @@ const ChallengePage = () => {
                         </span>
                         <span className="text-slate-800">
                           {contest.participantCount}/{contest.maxParticipants}
-                      </span>
+                        </span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-500 flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
+                          <Clock className="w-4 h-4 mr-1" />
                           Duration:
                         </span>
                         <span className="text-slate-800">{contest.duration}</span>
@@ -354,9 +354,9 @@ const ChallengePage = () => {
                         : "text-sky-light"
                     }`}>
                       {stakingStatus}
-                </div>
-              </div>
-            )}
+                    </div>
+                  </div>
+                )}
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
