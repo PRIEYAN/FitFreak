@@ -31,26 +31,24 @@ const WalletConnectStep = ({
         Wallet Connection
       </h2>
       <p className="text-slate-600 text-sm mb-6">
-        Connect your MetaMask wallet to access the FitFreak ecosystem
+        Connect your Solana wallet (Phantom, Solflare) to access the FitFreak ecosystem
       </p>
 
       {/* Wallet Info */}
       <div className="bg-sky-bg border border-sky-light rounded-lg p-4 mb-6">
         <div className="flex items-center justify-center space-x-2 mb-2">
-          <img
-            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNGNjY1MkEiLz4KPHBhdGggZD0iTTI0IDEzTDE2IDIxTDggMTNIMjRaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4="
-            alt="MetaMask"
-            className="w-6 h-6"
-          />
-          <span className="text-slate-800 font-semibold">MetaMask</span>
+          <div className="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+            <span className="text-white text-xs font-bold">S</span>
+          </div>
+          <span className="text-slate-800 font-semibold">Solana Wallet</span>
         </div>
-        <p className="text-xs text-slate-500">Industry standard Web3 wallet</p>
+        <p className="text-xs text-slate-500">Phantom, Solflare, or other Solana wallets</p>
       </div>
 
       <div className="flex items-start space-x-2 mb-6 text-left bg-yellow-50 border border-yellow-200 rounded-lg p-3">
         <AlertCircle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
         <div className="text-xs text-yellow-800">
-          Make sure MetaMask is installed and unlocked before connecting.
+          Make sure you have a Solana wallet installed (Phantom recommended) and unlocked before connecting.
         </div>
       </div>
 
@@ -68,7 +66,7 @@ const WalletConnectStep = ({
         ) : (
           <div className="flex items-center justify-center space-x-2">
             <Wallet className="w-5 h-5" />
-            <span>Connect MetaMask</span>
+            <span>Connect Solana Wallet</span>
           </div>
         )}
       </NeonButton>

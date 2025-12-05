@@ -20,9 +20,9 @@ interface UserBet {
 
 const LiveBettingPage = () => {
   const [userBets] = useState<UserBet[]>([
-    { playerId: 1, amount: "0.15 ETH" }, // User has bet on CyberWarrior
-    { playerId: 3, amount: "0.08 ETH" }, // User has bet on SquatKing
-    { playerId: 5, amount: "0.05 ETH" }, // User has bet on IronPump
+    { playerId: 1, amount: "0.15 SOL" }, // User has bet on CyberWarrior
+    { playerId: 3, amount: "0.08 SOL" }, // User has bet on SquatKing
+    { playerId: 5, amount: "0.05 SOL" }, // User has bet on IronPump
   ]);
 
   const players: Player[] = [
@@ -31,7 +31,7 @@ const LiveBettingPage = () => {
       name: "SquatMaster",
       videoSrc: "/src/gifs/squat.mp4",
       odds: "2.5x",
-      totalBets: "1.2 ETH",
+      totalBets: "1.2 SOL",
       performance: "85%",
       status: "live",
     },
@@ -40,7 +40,7 @@ const LiveBettingPage = () => {
       name: "PushUpPro",
       videoSrc: "/src/gifs/push-up.mp4",
       odds: "1.8x",
-      totalBets: "2.4 ETH",
+      totalBets: "2.4 SOL",
       performance: "92%",
       status: "live",
     },
@@ -49,7 +49,7 @@ const LiveBettingPage = () => {
       name: "PullUpKing",
       videoSrc: "/src/gifs/pull-up.mp4",
       odds: "3.2x",
-      totalBets: "0.8 ETH",
+      totalBets: "0.8 SOL",
       performance: "78%",
       status: "live",
     },
@@ -58,7 +58,7 @@ const LiveBettingPage = () => {
       name: "SitUpChamp",
       videoSrc: "/src/gifs/sit-up.mp4",
       odds: "2.1x",
-      totalBets: "1.6 ETH",
+      totalBets: "1.6 SOL",
       performance: "88%",
       status: "live",
     },
@@ -67,7 +67,7 @@ const LiveBettingPage = () => {
       name: "WalkWarrior",
       videoSrc: "/src/gifs/walk.mp4",
       odds: "4.0x",
-      totalBets: "0.5 ETH",
+      totalBets: "0.5 SOL",
       performance: "65%",
       status: "live",
     },
@@ -85,7 +85,7 @@ const LiveBettingPage = () => {
         </h2>
         <div className="text-sm text-slate-600">
           Total Pool:{" "}
-          <span className="text-sky-blue font-bold">6.5 ETH</span>
+          <span className="text-sky-blue font-bold">6.5 SOL</span>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ const LiveBettingPage = () => {
 
               <div className="mt-4 text-center">
                 <div className="text-sky-blue font-bold text-lg">
-                  0.28 ETH
+                  0.28 SOL
                 </div>
                 <div className="text-xs text-slate-500">Total Bet Amount</div>
               </div>

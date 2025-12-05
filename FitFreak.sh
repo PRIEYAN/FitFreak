@@ -23,15 +23,15 @@ FLASK_PORT=5000
 FRONTEND_PORT=5173
 
 # Environment variables
-export RPC_URL=https://rpc.testnet.citrea.xyz
-export ADMIN_PRIVATE_KEY=a75a5b53418ed8cca181fb838f37e807466322879891d9e201b2b45fdfbdc231
-export CONTRACT_ADDRESS=0xd43dc5f84320B34149Be4D0602F862DdD61A45CF
+export RPC_URL=https://api.devnet.solana.com
+export SOLANA_NETWORK=devnet
+export PROGRAM_ADDRESS=
 export PORT=$BACKEND_PORT
 export FLASK_PORT=$FLASK_PORT
 
 export VITE_API_BASE_URL=http://localhost:$BACKEND_PORT/api
-export VITE_CONTRACT_ADDRESS=$CONTRACT_ADDRESS
-export VITE_CHAIN_ID=0x1a1
+export VITE_PROGRAM_ADDRESS=$PROGRAM_ADDRESS
+export VITE_SOLANA_NETWORK=$SOLANA_NETWORK
 export VITE_RPC_URL=$RPC_URL
 export VITE_DEBUG=true
 
@@ -119,8 +119,8 @@ show_status() {
     echo -e "  ${CYAN}Video Feed:${NC}  http://localhost:$FLASK_PORT/video_feed"
     echo ""
     echo -e "${BOLD}${WHITE}Blockchain:${NC}"
-    echo -e "  ${CYAN}Network:${NC}     Citrea Testnet"
-    echo -e "  ${CYAN}Contract:${NC}    $CONTRACT_ADDRESS"
+    echo -e "  ${CYAN}Network:${NC}     Solana $SOLANA_NETWORK"
+    echo -e "  ${CYAN}Program:${NC}      ${PROGRAM_ADDRESS:-'Not configured'}"
     echo ""
 }
 

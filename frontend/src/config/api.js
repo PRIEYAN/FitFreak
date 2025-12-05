@@ -1,9 +1,9 @@
 // API Configuration
 export const API_CONFIG = {
   BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api',
-  CONTRACT_ADDRESS: import.meta.env.VITE_CONTRACT_ADDRESS || '0xd43dc5f84320B34149Be4D0602F862DdD61A45CF',
-  CHAIN_ID: import.meta.env.VITE_CHAIN_ID || '0x13fb', // Citrea Testnet (5115 in decimal)
-  RPC_URL: import.meta.env.VITE_RPC_URL || 'https://rpc.testnet.citrea.xyz',
+  PROGRAM_ADDRESS: import.meta.env.VITE_PROGRAM_ADDRESS || '', // Solana Program ID (to be deployed)
+  NETWORK: import.meta.env.VITE_SOLANA_NETWORK || 'devnet', // 'devnet' or 'mainnet-beta'
+  RPC_URL: import.meta.env.VITE_RPC_URL || 'https://api.devnet.solana.com',
 };
 
 // API Endpoints

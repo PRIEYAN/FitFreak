@@ -64,10 +64,10 @@ const BettingPage = () => {
       type: "strength",
       startTime: "2024-10-15 18:00",
       duration: "45 mins",
-      totalPool: "12.5 ETH",
+      totalPool: "12.5 SOL",
       participants: 8,
       status: "upcoming",
-      minBet: "0.01 ETH",
+      minBet: "0.01 SOL",
       featured: true,
       description:
         "Elite athletes compete in strength challenges including deadlifts, bench press, and functional movements.",
@@ -83,7 +83,7 @@ const BettingPage = () => {
           name: "IronTitan_X",
           level: 18,
           winRate: 87,
-          totalEarned: "23.4 ETH",
+          totalEarned: "23.4 SOL",
           streak: 12,
           completedChallenges: 89,
           rank: "Legend",
@@ -95,7 +95,7 @@ const BettingPage = () => {
           name: "PowerLift_Pro",
           level: 16,
           winRate: 82,
-          totalEarned: "18.7 ETH",
+          totalEarned: "18.7 SOL",
           streak: 8,
           completedChallenges: 76,
           rank: "Elite",
@@ -107,7 +107,7 @@ const BettingPage = () => {
           name: "StrengthBeast",
           level: 15,
           winRate: 79,
-          totalEarned: "15.2 ETH",
+          totalEarned: "15.2 SOL",
           streak: 6,
           completedChallenges: 67,
           rank: "Elite",
@@ -122,10 +122,10 @@ const BettingPage = () => {
       type: "cardio",
       startTime: "2024-10-16 19:30",
       duration: "30 mins",
-      totalPool: "8.2 ETH",
+      totalPool: "8.2 SOL",
       participants: 12,
       status: "betting-closed",
-      minBet: "0.005 ETH",
+      minBet: "0.005 SOL",
       featured: false,
       description:
         "High-intensity cardio challenge featuring burpees, mountain climbers, and sprint intervals.",
@@ -142,10 +142,10 @@ const BettingPage = () => {
       type: "endurance",
       startTime: "2024-10-17 20:00",
       duration: "90 mins",
-      totalPool: "20.1 ETH",
+      totalPool: "20.1 SOL",
       participants: 15,
       status: "live",
-      minBet: "0.02 ETH",
+      minBet: "0.02 SOL",
       featured: true,
       description:
         "Epic 90-minute endurance test combining running, cycling, and bodyweight exercises.",
@@ -212,7 +212,7 @@ const BettingPage = () => {
           <div className="text-sm text-slate-500 mb-1">Your Balance</div>
           <div className="text-2xl font-bold text-sky-blue flex items-center">
             <Wallet className="w-5 h-5 mr-2" />
-            1.25 ETH
+            1.25 SOL
           </div>
         </div>
       </div>
@@ -488,7 +488,7 @@ const BettingPage = () => {
                       <div className="bg-sky-bg border border-sky-light rounded px-2 py-1 text-center">
                         <div className="text-sky-blue text-xs font-bold">
                           ✓ Bet Placed:{" "}
-                          {selectedBets[selectedContest.id].amount} ETH
+                          {selectedBets[selectedContest.id].amount} SOL
                         </div>
                       </div>
                     )}
@@ -612,7 +612,7 @@ const BettingPage = () => {
                       )
                     }
                   >
-                    Bet {betAmount} ETH
+                    Bet {betAmount} SOL
                   </NeonButton>
                 </div>
               </div>

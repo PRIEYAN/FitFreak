@@ -6,41 +6,25 @@ import WalletConnectStep from "../components/WalletConnectStep";
 import VerificationStep from "../components/VerificationStep";
 import ProgressIndicator from "../components/ProgressIndicator";
 import aiWorkflow from "../api/ai/aiCoach";
+import { useWeb3 } from "../hooks/useWeb3";
 type UserInfo = { wallet?: string; goal?: string; nickname?: string };
 
 const AuthPage = () => {
   const [step, setStep] = useState(1);
-  const [isConnecting, setIsConnecting] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo>({});
   const navigate = useNavigate();
+  const { connectWallet, account, isConnecting, isWalletInstalled } = useWeb3();
 
   const handleWalletConnect = async () => {
-    setIsConnecting(true);
     try {
-      const { ethereum } = window as typeof window & {
-        ethereum?: {
-          request?: (args: {
-            method: string;
-            params?: unknown[];
-          }) => Promise<any>;
-        };
-      };
-
-      if (!ethereum) {
-        alert("MetaMask not found. Please install MetaMask to continue.");
-        setIsConnecting(false);
-        return;
-      }
-
-      const accounts = await ethereum.request!({
-        method: "eth_requestAccounts",
-      });
-      setUserInfo((prev) => ({ ...prev, wallet: accounts[0] }));
-      setIsConnecting(false);
+      const walletAddress = await connectWallet();
+      setUserInfo((prev) => ({ ...prev, wallet: walletAddress }));
       setStep(2);
     } catch (error) {
       console.error("Wallet connection failed:", error);
-      setIsConnecting(false);
+      if (!isWalletInstalled) {
+        alert("Solana wallet not found. Please install Phantom or Solflare to continue.");
+      }
     }
   };
 
