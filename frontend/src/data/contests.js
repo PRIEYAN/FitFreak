@@ -4,7 +4,7 @@ export const HARDCODED_CONTESTS = [
     id: 1,
     name: "Quick Win Contest",
     description: "Fast-paced challenge with low entry barrier",
-    stakeAmount: "1000000", // 0.001 SOL in lamports
+    stakeAmount: "1000000000000000", // 0.001 ETH in wei
     stakeAmountDisplay: "0.001",
     startTime: Math.floor(Date.now() / 1000),
     endTime: Math.floor(Date.now() / 1000) + 86400, // 1 day
@@ -14,7 +14,7 @@ export const HARDCODED_CONTESTS = [
     rewardsDistributed: false,
     difficulty: "Easy",
     duration: "1 Day",
-    prizePool: "0.6 SOL", // 50 * 0.01 * 0.12 (12% of total)
+    prizePool: "0.6 CBTC", // 50 * 0.01 * 0.12 (12% of total)
     icon: "⚡",
     color: "from-green-400 to-blue-500",
     participants: []
@@ -23,7 +23,7 @@ export const HARDCODED_CONTESTS = [
     id: 2,
     name: "Weekly Challenge",
     description: "Medium stake weekly fitness challenge",
-    stakeAmount: "2000000", // 0.002 SOL in lamports
+    stakeAmount: "2000000000000000", // 0.002 ETH in wei
     stakeAmountDisplay: "0.002",
     startTime: Math.floor(Date.now() / 1000),
     endTime: Math.floor(Date.now() / 1000) + 604800, // 7 days
@@ -33,7 +33,7 @@ export const HARDCODED_CONTESTS = [
     rewardsDistributed: false,
     difficulty: "Medium",
     duration: "7 Days",
-    prizePool: "2.8 SOL", // 100 * 0.1 * 0.28
+    prizePool: "2.8 CBTC", // 100 * 0.1 * 0.28
     icon: "💪",
     color: "from-blue-400 to-purple-500",
     participants: []
@@ -42,7 +42,7 @@ export const HARDCODED_CONTESTS = [
     id: 3,
     name: "Monthly Tournament",
     description: "High stakes monthly championship",
-    stakeAmount: "5000000", // 0.005 SOL in lamports
+    stakeAmount: "5000000000000000", // 0.005 ETH in wei
     stakeAmountDisplay: "0.005",
     startTime: Math.floor(Date.now() / 1000),
     endTime: Math.floor(Date.now() / 1000) + 2592000, // 30 days
@@ -52,7 +52,7 @@ export const HARDCODED_CONTESTS = [
     rewardsDistributed: false,
     difficulty: "Hard",
     duration: "30 Days",
-    prizePool: "45 SOL", // 200 * 1 * 0.225
+    prizePool: "45 CBTC", // 200 * 1 * 0.225
     icon: "🏆",
     color: "from-purple-400 to-pink-500",
     participants: []
@@ -61,7 +61,7 @@ export const HARDCODED_CONTESTS = [
     id: 4,
     name: "Elite Championship",
     description: "Premium elite championship with massive rewards",
-    stakeAmount: "10000000", // 0.01 SOL in lamports
+    stakeAmount: "10000000000000000", // 0.01 ETH in wei
     stakeAmountDisplay: "0.01",
     startTime: Math.floor(Date.now() / 1000),
     endTime: Math.floor(Date.now() / 1000) + 5184000, // 60 days
@@ -71,7 +71,7 @@ export const HARDCODED_CONTESTS = [
     rewardsDistributed: false,
     difficulty: "Elite",
     duration: "60 Days",
-    prizePool: "40 SOL", // 500 * 5 * 0.016
+    prizePool: "40 CBTC", // 500 * 5 * 0.016
     icon: "👑",
     color: "from-yellow-400 to-orange-500",
     participants: []
@@ -83,9 +83,9 @@ export const getContestById = (id) => {
   return HARDCODED_CONTESTS.find(contest => contest.id === parseInt(id));
 };
 
-// Helper function to format stake amount for display (Solana lamports to SOL)
-export const formatStakeAmount = (lamports) => {
-  const amount = parseFloat(lamports) / 1e9; // Convert lamports to SOL
+// Helper function to format stake amount for display (wei to ETH)
+export const formatStakeAmount = (wei) => {
+  const amount = parseFloat(wei) / 1e18; // Convert wei to ETH
   return amount.toFixed(4);
 };
 

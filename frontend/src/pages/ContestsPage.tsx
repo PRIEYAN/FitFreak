@@ -23,12 +23,12 @@ const ContestsPage = () => {
     {
       id: 1,
       name: "Max Squats in 5 Minutes",
-      prize: "10 SOL",
+      prize: "10 ETH",
       participants: 2547,
       timeLeft: "5d 12h",
       difficulty: "Hard",
       duration: "5 minutes",
-      stake: "0.1 SOL",
+      stake: "0.1 ETH",
       description:
         "Complete as many perfect squats as possible in 5 minutes. AI will track your form and count valid reps.",
       rules: [
@@ -41,12 +41,12 @@ const ContestsPage = () => {
     {
       id: 2,
       name: "100 Squats Speed Challenge",
-      prize: "5 SOL",
+      prize: "5 ETH",
       participants: 1892,
       timeLeft: "2d 8h",
       difficulty: "Medium",
       duration: "Until complete",
-      stake: "0.05 SOL",
+      stake: "0.05 ETH",
       description:
         "Complete 100 perfect squats as fast as possible. Fastest times win!",
       rules: [
@@ -59,12 +59,12 @@ const ContestsPage = () => {
     {
       id: 3,
       name: "Squat Endurance Marathon",
-      prize: "15 SOL",
+      prize: "15 ETH",
       participants: 3241,
       timeLeft: "12d 15h",
       difficulty: "Extreme",
       duration: "30 minutes",
-      stake: "0.2 SOL",
+      stake: "0.2 ETH",
       description:
         "Maintain squat position for maximum time within 30 minutes. Longest hold wins.",
       rules: [
@@ -77,12 +77,12 @@ const ContestsPage = () => {
     {
       id: 4,
       name: "Daily Squat Streak",
-      prize: "8 SOL",
+      prize: "8 ETH",
       participants: 1654,
       timeLeft: "1d 3h",
       difficulty: "Easy",
       duration: "7 days",
-      stake: "0.03 SOL",
+      stake: "0.03 ETH",
       description:
         "Complete 50 squats daily for 7 consecutive days. Consistency is key!",
       rules: [
@@ -102,7 +102,7 @@ const ContestsPage = () => {
         </h2>
         <div className="text-sm text-slate-600">
           Total Prize Pool:{" "}
-          <span className="text-sky-blue font-bold">38 SOL</span>
+          <span className="text-sky-blue font-bold">38 ETH</span>
         </div>
       </div>
 

@@ -1,196 +1,177 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { ethers } from 'ethers';
 import { API_CONFIG } from '../config/api';
-
-// Solana Configuration
-const SOLANA_NETWORK = 'devnet'; // or 'mainnet-beta' for production
-const SOLANA_RPC_URL = API_CONFIG.RPC_URL || 'https://api.devnet.solana.com';
 
 export const useWeb3 = () => {
   const [account, setAccount] = useState(null);
-  const [publicKey, setPublicKey] = useState(null);
-  const [connection, setConnection] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState(null);
-  const [balance, setBalance] = useState(0);
+  const [balance, setBalance] = useState('0');
+  const [provider, setProvider] = useState(null);
+  const [signer, setSigner] = useState(null);
 
-  // Initialize Solana connection
-  useEffect(() => {
-    const conn = new Connection(SOLANA_RPC_URL, 'confirmed');
-    setConnection(conn);
-  }, []);
-
-  // Check if Solana wallet is installed
+  // Check if MetaMask is installed
   const isWalletInstalled = useCallback(() => {
-    return typeof window !== 'undefined' && 
-           (window.solana || window.phantom || window.solflare);
+    return typeof window !== 'undefined' && window.ethereum;
   }, []);
 
-  // Get wallet provider
-  const getWalletProvider = useCallback(() => {
-    if (typeof window === 'undefined') return null;
-    
-    // Check for Phantom first (most popular)
-    if (window.phantom?.solana) {
-      return window.phantom.solana;
+  // Switch to Citrea Testnet
+  const switchToCitreaNetwork = useCallback(async () => {
+    if (!window.ethereum) return;
+
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: API_CONFIG.CHAIN_ID }],
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: API_CONFIG.CHAIN_ID,
+              chainName: 'Citrea Testnet',
+              nativeCurrency: {
+                name: 'Citrea',
+                symbol: 'CBTC',
+                decimals: 18,
+              },
+              rpcUrls: [API_CONFIG.RPC_URL],
+              blockExplorerUrls: ['https://explorer.testnet.citrea.xyz'],
+            }],
+          });
+        } catch (addError) {
+          console.error('Failed to add Citrea network:', addError);
+          throw new Error('Please add Citrea Testnet manually in MetaMask');
+        }
+      } else {
+        throw switchError;
+      }
     }
-    
-    // Check for Solflare
-    if (window.solflare) {
-      return window.solflare;
-    }
-    
-    // Check for generic Solana provider
-    if (window.solana) {
-      return window.solana;
-    }
-    
-    return null;
   }, []);
 
   // Connect wallet
   const connectWallet = useCallback(async () => {
     if (!isWalletInstalled()) {
-      throw new Error('Please install a Solana wallet (Phantom, Solflare) to continue');
+      throw new Error('Please install MetaMask to continue');
     }
 
     setIsConnecting(true);
     setError(null);
 
     try {
-      const provider = getWalletProvider();
-      
-      if (!provider) {
-        throw new Error('No Solana wallet provider found');
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+
+      if (accounts.length === 0) {
+        throw new Error('No accounts found');
       }
 
-      // Request connection
-      const response = await provider.connect();
-      const pubKey = new PublicKey(response.publicKey);
-      
-      setPublicKey(pubKey);
-      setAccount(pubKey.toBase58());
+      const accountAddress = accounts[0];
+      setAccount(accountAddress);
+
+      // Switch to Citrea Testnet
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+      if (chainId !== API_CONFIG.CHAIN_ID) {
+        await switchToCitreaNetwork();
+      }
+
+      // Initialize provider and signer
+      const ethProvider = new ethers.BrowserProvider(window.ethereum);
+      const ethSigner = await ethProvider.getSigner();
+      setProvider(ethProvider);
+      setSigner(ethSigner);
 
       // Get balance
-      if (connection) {
-        try {
-          const balance = await connection.getBalance(pubKey);
-          setBalance(balance / LAMPORTS_PER_SOL);
-        } catch (balanceError) {
-          console.warn('Could not fetch balance:', balanceError);
-          setBalance(0);
-        }
+      try {
+        const balance = await ethProvider.getBalance(accountAddress);
+        setBalance(ethers.formatEther(balance));
+      } catch (balanceError) {
+        console.warn('Could not fetch balance:', balanceError);
+        setBalance('0');
       }
 
-      console.log('✅ Wallet connected:', pubKey.toBase58());
-      return pubKey.toBase58();
+      console.log('✅ Wallet connected:', accountAddress);
+      return accountAddress;
     } catch (error) {
       console.error('Error connecting wallet:', error);
-      setError(error.message);
+      
+      if (error.code === -32603 && error.data?.cause?.isBrokenCircuitError) {
+        setError('MetaMask circuit breaker is open. Please wait a moment and try again.');
+      } else if (error.code === 4001) {
+        setError('Connection rejected by user');
+      } else {
+        setError(error.message || 'Failed to connect wallet');
+      }
       throw error;
     } finally {
       setIsConnecting(false);
     }
-  }, [isWalletInstalled, getWalletProvider, connection]);
+  }, [isWalletInstalled, switchToCitreaNetwork]);
 
   // Disconnect wallet
   const disconnectWallet = useCallback(async () => {
-    try {
-      const provider = getWalletProvider();
-      if (provider && provider.disconnect) {
-        await provider.disconnect();
-      }
-    } catch (error) {
-      console.error('Error disconnecting wallet:', error);
-    } finally {
-      setAccount(null);
-      setPublicKey(null);
-      setBalance(0);
-      setError(null);
-    }
-  }, [getWalletProvider]);
+    setAccount(null);
+    setProvider(null);
+    setSigner(null);
+    setBalance('0');
+    setError(null);
+  }, []);
 
   // Send transaction
   const sendTransaction = useCallback(async (toAddress, amount) => {
-    if (!publicKey || !connection) {
+    if (!signer || !account) {
       throw new Error('Wallet not connected');
     }
 
-    const provider = getWalletProvider();
-    if (!provider) {
-      throw new Error('Wallet provider not found');
-    }
-
     try {
-      const toPubkey = new PublicKey(toAddress);
-      const lamports = amount * LAMPORTS_PER_SOL;
+      const tx = await signer.sendTransaction({
+        to: toAddress,
+        value: ethers.parseEther(amount.toString()),
+      });
 
-      const transaction = new Transaction().add(
-        SystemProgram.transfer({
-          fromPubkey: publicKey,
-          toPubkey: toPubkey,
-          lamports: lamports,
-        })
-      );
-
-      // Get recent blockhash
-      const { blockhash } = await connection.getLatestBlockhash();
-      transaction.recentBlockhash = blockhash;
-      transaction.feePayer = publicKey;
-
-      // Sign and send transaction
-      const signed = await provider.signTransaction(transaction);
-      const signature = await connection.sendRawTransaction(signed.serialize());
-      
-      // Confirm transaction
-      await connection.confirmTransaction(signature, 'confirmed');
-
-      return signature;
+      const receipt = await tx.wait();
+      return receipt.hash;
     } catch (error) {
       console.error('Error sending transaction:', error);
       throw error;
     }
-  }, [publicKey, connection, getWalletProvider]);
+  }, [signer, account]);
 
-  // Listen for wallet events
+  // Listen for account changes
   useEffect(() => {
-    const provider = getWalletProvider();
-    if (!provider) return;
+    if (!window.ethereum) return;
 
-    const handleAccountChange = (publicKey) => {
-      if (publicKey) {
-        const pubKey = new PublicKey(publicKey);
-        setPublicKey(pubKey);
-        setAccount(pubKey.toBase58());
-        
-        // Update balance
-        if (connection) {
-          connection.getBalance(pubKey).then(balance => {
-            setBalance(balance / LAMPORTS_PER_SOL);
-          });
-        }
-      } else {
+    const handleAccountsChanged = async (accounts) => {
+      if (accounts.length === 0) {
         disconnectWallet();
+      } else if (accounts[0] !== account) {
+        setAccount(accounts[0]);
+        if (provider) {
+          try {
+            const balance = await provider.getBalance(accounts[0]);
+            setBalance(ethers.formatEther(balance));
+          } catch (error) {
+            console.warn('Could not fetch balance:', error);
+          }
+        }
       }
     };
 
-    const handleDisconnect = () => {
-      disconnectWallet();
+    const handleChainChanged = () => {
+      window.location.reload();
     };
 
-    // Phantom wallet events
-    if (provider.on) {
-      provider.on('accountChanged', handleAccountChange);
-      provider.on('disconnect', handleDisconnect);
-    }
+    window.ethereum.on('accountsChanged', handleAccountsChanged);
+    window.ethereum.on('chainChanged', handleChainChanged);
 
     return () => {
-      if (provider.removeListener) {
-        provider.removeListener('accountChanged', handleAccountChange);
-        provider.removeListener('disconnect', handleDisconnect);
-      }
+      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      window.ethereum.removeListener('chainChanged', handleChainChanged);
     };
-  }, [connection, getWalletProvider, disconnectWallet]);
+  }, [account, provider, disconnectWallet]);
 
   // Check if already connected on mount
   useEffect(() => {
@@ -198,42 +179,42 @@ export const useWeb3 = () => {
       if (!isWalletInstalled()) return;
 
       try {
-        const provider = getWalletProvider();
-        if (provider && provider.isConnected) {
-          const response = await provider.connect({ onlyIfTrusted: true });
-          if (response) {
-            const pubKey = new PublicKey(response.publicKey);
-            setPublicKey(pubKey);
-            setAccount(pubKey.toBase58());
-            
-            if (connection) {
-              const balance = await connection.getBalance(pubKey);
-              setBalance(balance / LAMPORTS_PER_SOL);
-            }
+        const accounts = await window.ethereum.request({
+          method: 'eth_accounts',
+        });
+
+        if (accounts.length > 0) {
+          const accountAddress = accounts[0];
+          setAccount(accountAddress);
+
+          const ethProvider = new ethers.BrowserProvider(window.ethereum);
+          const ethSigner = await ethProvider.getSigner();
+          setProvider(ethProvider);
+          setSigner(ethSigner);
+
+          try {
+            const balance = await ethProvider.getBalance(accountAddress);
+            setBalance(ethers.formatEther(balance));
+          } catch (error) {
+            console.warn('Could not fetch balance:', error);
           }
         }
       } catch (error) {
-        // User hasn't connected before, ignore
         console.log('No previous connection found');
       }
     };
 
-    if (connection) {
-      checkConnection();
-    }
-  }, [isWalletInstalled, getWalletProvider, connection]);
+    checkConnection();
+  }, [isWalletInstalled]);
 
   return {
-    // State
     account,
-    publicKey,
-    connection,
     balance,
     isConnecting,
     error,
     isWalletInstalled: isWalletInstalled(),
-    
-    // Actions
+    provider,
+    signer,
     connectWallet,
     disconnectWallet,
     sendTransaction,

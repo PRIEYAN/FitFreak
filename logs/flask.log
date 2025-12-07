@@ -8,3 +8,52 @@
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 556-145-689
+127.0.0.1 - - [05/Dec/2025 23:43:05] "GET / HTTP/1.1" 200 -
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1764958385.511763   99637 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1764958385.515208   99673 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 Mesa 25.2.7-arch1.1), renderer: Mesa Intel(R) Graphics (ADL GT2)
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1764958385.564033   99648 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1764958385.585779   99651 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1764958385.825762   99644 landmark_projection_calculator.cc:186] Using NORM_RECT without IMAGE_DIMENSIONS is only supported for the square ROI. Provide IMAGE_DIMENSIONS or use PROJECTION_MATRIX.
+127.0.0.1 - - [05/Dec/2025 23:43:05] "GET /video_feed HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:05] "POST /heartbeat HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:05] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [05/Dec/2025 23:43:06] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:07] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:07] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:07] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:07] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:07] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:08] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:08] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:08] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:08] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:08] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:09] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:09] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:09] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:09] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:09] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:10] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:10] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:10] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:10] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:10] "POST /heartbeat HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:10] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:11] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:11] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:11] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:11] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:12] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:12] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:12] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:12] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:12] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:13] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:13] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:13] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:13] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:13] "GET /stats HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 23:43:14] "GET /stats HTTP/1.1" 200 -

@@ -23,7 +23,7 @@ const AuthPage = () => {
     } catch (error) {
       console.error("Wallet connection failed:", error);
       if (!isWalletInstalled) {
-        alert("Solana wallet not found. Please install Phantom or Solflare to continue.");
+        alert("MetaMask not found. Please install MetaMask to continue.");
       }
     }
   };

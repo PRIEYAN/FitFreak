@@ -1,41 +1,113 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Clock, Users, Play, Activity, Camera, Wallet, Trophy, Zap, Crown, Star } from "lucide-react";
-import { PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { ethers } from "ethers";
 import GlassCard from "../components/GlassCard";
 import NeonButton from "../components/NeonButton";
 import outputSquatGif from "../gifs/output_squat.gif";
 import { HARDCODED_CONTESTS, getTimeRemaining } from "../data/contests";
 import { API_CONFIG } from "../config/api";
-import { useWeb3 } from "../hooks/useWeb3";
 
 const ChallengePage = () => {
   const [showContestModal, setShowContestModal] = useState(false);
   const [showCameraModal, setShowCameraModal] = useState(false);
   const [selectedContest, setSelectedContest] = useState(null);
+  const [account, setAccount] = useState("");
+  const [isConnected, setIsConnected] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [balance, setBalance] = useState("0");
   const [isStaking, setIsStaking] = useState(false);
   const [stakingStatus, setStakingStatus] = useState("");
   const [contests, setContests] = useState(HARDCODED_CONTESTS);
 
-  // Use Solana Web3 hook
-  const {
-    account,
-    publicKey,
-    balance,
-    isConnecting,
-    isWalletInstalled,
-    connectWallet,
-    disconnectWallet,
-    sendTransaction,
-    error: walletError
-  } = useWeb3();
+  // Connect to MetaMask
+  const connectWallet = async () => {
+    console.log("Connect wallet clicked!");
+    
+      if (!window.ethereum) {
+        alert("Please install MetaMask!");
+        return;
+      }
 
-  const isConnected = !!account;
+    try {
+      setIsConnecting(true);
+      console.log("Requesting accounts...");
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
 
-  // Stake in contest (Solana version)
+      if (accounts.length > 0) {
+        setAccount(accounts[0]);
+        setIsConnected(true);
+        
+        // Switch to Citrea Testnet first, then get balance
+        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+        if (chainId !== API_CONFIG.CHAIN_ID) {
+          await switchToCitreaNetwork();
+        }
+        
+        // Get balance with retry logic
+        try {
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const balance = await provider.getBalance(accounts[0]);
+          setBalance(ethers.formatEther(balance));
+        } catch (balanceError) {
+          console.warn("Could not fetch balance:", balanceError);
+          setBalance("0.0000"); // Set default balance
+        }
+      }
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+      
+      // Handle specific MetaMask errors
+      if (error.code === -32603 && error.data?.cause?.isBrokenCircuitError) {
+        alert("MetaMask circuit breaker is open. Please wait a moment and try again, or refresh the page.");
+      } else if (error.code === 4001) {
+        alert("Connection rejected by user");
+      } else {
+        alert(`Failed to connect wallet: ${error.message}`);
+      }
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  // Switch to Citrea Testnet
+  const switchToCitreaNetwork = async () => {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: API_CONFIG.CHAIN_ID }],
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: API_CONFIG.CHAIN_ID,
+              chainName: 'Citrea Testnet',
+              nativeCurrency: {
+                name: 'Citrea',
+                symbol: 'CBTC',
+                decimals: 18,
+              },
+              rpcUrls: [API_CONFIG.RPC_URL],
+              blockExplorerUrls: ['https://explorer.testnet.citrea.xyz'],
+            }],
+          });
+        } catch (addError) {
+          console.error('Failed to add Citrea network:', addError);
+          alert('Please add Citrea Testnet manually in MetaMask');
+        }
+      }
+    }
+  };
+
+  // Stake in contest
   const stakeInContest = async (contest) => {
-    if (!isConnected || !publicKey) {
-      alert("Please connect your Solana wallet first!");
+    if (!isConnected) {
+      alert("Please connect your wallet first!");
       return;
     }
 
@@ -43,43 +115,55 @@ const ChallengePage = () => {
       setIsStaking(true);
       setStakingStatus("Preparing transaction...");
       
-      // Convert stake amount to SOL (assuming contest.stakeAmount is in lamports or SOL)
-      const stakeAmount = parseFloat(contest.stakeAmount) / 1e9; // Convert from lamports if needed
-      
-      setStakingStatus("Please confirm transaction in your wallet...");
+      // Skip balance check for now due to RPC issues
+      // Just proceed with the transaction and let MetaMask handle it
+      setStakingStatus("Please confirm transaction in MetaMask...");
 
-      // For now, we'll use a simple transfer
-      // In production, you'd call your Solana program here
-      // TODO: Replace with actual program call when program is deployed
-      const programAddress = API_CONFIG.PROGRAM_ADDRESS;
-      
-      if (!programAddress) {
-        // Fallback: Just show success for demo
-        setStakingStatus("Success! You've joined the contest!");
-        
-        setContests(prevContests => 
-          prevContests.map(c => 
-            c.id === contest.id 
-              ? { ...c, participantCount: c.participantCount + 1 }
-              : c
-          )
-        );
+      // Create transaction using window.ethereum directly to avoid RPC issues
+      const txParams = {
+            from: account,
+        to: API_CONFIG.CONTRACT_ADDRESS,
+        value: `0x${BigInt(contest.stakeAmount).toString(16)}`,
+        data: `0x5d6e6c7c${contest.id.toString(16).padStart(64, '0')}`, // joinContest function call
+        gas: "0x30d40" // 200000 in hex
+      };
 
-        setTimeout(() => {
-          setShowContestModal(false);
-          setStakingStatus("");
-        }, 2000);
-        return;
+      // Send transaction
+      const txHash = await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [txParams]
+      });
+
+      setStakingStatus("Transaction submitted, waiting for confirmation...");
+      console.log("Transaction hash:", txHash);
+
+      // Wait for confirmation using a simple approach
+      let receipt = null;
+      let attempts = 0;
+      const maxAttempts = 30; // 30 seconds max wait
+
+      while (!receipt && attempts < maxAttempts) {
+        try {
+          receipt = await window.ethereum.request({
+            method: 'eth_getTransactionReceipt',
+            params: [txHash]
+          });
+          if (!receipt) {
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+            attempts++;
+          }
+        } catch (error) {
+          console.warn("Error checking transaction receipt:", error);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          attempts++;
+        }
       }
 
-      // Send transaction to Solana program
-      // This is a placeholder - replace with actual program interaction
-      setStakingStatus("Transaction submitted, waiting for confirmation...");
-
-      // Simulate transaction confirmation
-      setTimeout(() => {
+      if (receipt) {
+      console.log("Transaction confirmed:", receipt);
         setStakingStatus("Success! You've joined the contest!");
         
+        // Update contest participant count
         setContests(prevContests => 
           prevContests.map(c => 
             c.id === contest.id 
@@ -88,15 +172,25 @@ const ChallengePage = () => {
           )
         );
 
+        // Close modal after success
         setTimeout(() => {
           setShowContestModal(false);
           setStakingStatus("");
         }, 2000);
-      }, 2000);
+      } else {
+        setStakingStatus("Transaction submitted but confirmation timed out. Check your wallet for status.");
+      }
 
     } catch (error) {
       console.error("Error staking:", error);
-      setStakingStatus(`Error: ${error.message}`);
+      
+      if (error.code === 4001) {
+        setStakingStatus("Transaction rejected by user");
+      } else if (error.code === -32603) {
+        setStakingStatus("Insufficient funds for gas or transaction failed");
+      } else {
+        setStakingStatus(`Error: ${error.message}`);
+      }
     } finally {
       setIsStaking(false);
     }
@@ -138,7 +232,7 @@ const ChallengePage = () => {
             transition={{ delay: 0.2 }}
             className="text-xl text-slate-600 mb-8"
           >
-            Join contests, stake SOL, and win rewards!
+            Join contests, stake CBTC, and win rewards!
           </motion.p>
 
           {/* Wallet Connection */}
@@ -146,21 +240,21 @@ const ChallengePage = () => {
             {!isConnected ? (
               <NeonButton
                 onClick={connectWallet}
-                disabled={isConnecting || !isWalletInstalled}
+                disabled={isConnecting}
                 className="px-8 py-3"
               >
                 {isConnecting ? (
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-sky-blue border-t-transparent rounded-full animate-spin" />
                     Connecting...
-                  </div>
-                ) : (
+            </div>
+          ) : (
                   <div className="flex items-center gap-2">
                     <Wallet className="w-5 h-5" />
-                    {isWalletInstalled ? "Connect Solana Wallet" : "Install Solana Wallet"}
+              Connect Wallet
                   </div>
                 )}
-              </NeonButton>
+            </NeonButton>
             ) : (
               <div className="flex items-center gap-4 glass-card rounded-lg px-6 py-3">
                 <div className="flex items-center gap-2 text-sky-blue">
@@ -171,12 +265,12 @@ const ChallengePage = () => {
                   {account.slice(0, 6)}...{account.slice(-4)}
                 </div>
                 <div className="text-slate-600">
-                  {balance.toFixed(4)} SOL
+                  {parseFloat(balance).toFixed(4)} CBTC
                 </div>
               </div>
-            )}
-          </div>
+          )}
         </div>
+      </div>
 
         {/* Contests Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -217,7 +311,7 @@ const ChallengePage = () => {
                           Stake:
                         </span>
                         <span className="text-slate-800 font-semibold">
-                          {contest.stakeAmountDisplay} SOL
+                          {contest.stakeAmountDisplay} CBTC
                         </span>
                       </div>
                       <div className="flex justify-between text-sm">
@@ -227,11 +321,11 @@ const ChallengePage = () => {
                         </span>
                         <span className="text-slate-800">
                           {contest.participantCount}/{contest.maxParticipants}
-                        </span>
+                      </span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-slate-500 flex items-center">
-                          <Clock className="w-4 h-4 mr-1" />
+                      <Clock className="w-4 h-4 mr-1" />
                           Duration:
                         </span>
                         <span className="text-slate-800">{contest.duration}</span>
@@ -316,7 +410,7 @@ const ChallengePage = () => {
                   <div className="glass-card rounded-lg p-3">
                     <div className="text-slate-500">Stake Amount</div>
                     <div className="text-sky-blue font-semibold">
-                      {selectedContest.stakeAmountDisplay} SOL
+                      {selectedContest.stakeAmountDisplay} CBTC
                     </div>
                   </div>
                   <div className="glass-card rounded-lg p-3">
@@ -354,9 +448,9 @@ const ChallengePage = () => {
                         : "text-sky-light"
                     }`}>
                       {stakingStatus}
-                    </div>
-                  </div>
-                )}
+                </div>
+              </div>
+            )}
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
@@ -380,7 +474,7 @@ const ChallengePage = () => {
                     ) : (
                       <div className="flex items-center gap-2">
                         <Wallet className="w-4 h-4" />
-                        Stake {selectedContest.stakeAmountDisplay} SOL
+                        Stake {selectedContest.stakeAmountDisplay} CBTC
                       </div>
                     )}
                   </NeonButton>
